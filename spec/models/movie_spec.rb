@@ -22,8 +22,7 @@ RSpec.describe Movie, type: :model do
     end
 
     it " should be invalid if doesn't exist" do
-      create(:movie, name: "Deadpool")
-      expect(build(:movie, name: "Deadpool")).to be_invalid
+      expect(build(:movie, genre_id: -1)).to be_invalid
     end
   end
 end
