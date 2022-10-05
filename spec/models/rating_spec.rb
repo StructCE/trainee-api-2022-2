@@ -24,4 +24,24 @@ RSpec.describe Rating, type: :model do
       expect(build(:rating, grade: nil)).to be_invalid
     end
   end
+
+  context "Validating user" do
+    it " should be invalid if nil" do
+      expect(build(:rating, user: nil)).to be_invalid
+    end
+
+    it " should be invalid doesn't exist" do
+      expect(build(:rating, user_id: -1)).to be_invalid
+    end
+  end
+
+  context "Validating movie" do
+    it " should be invalid if nil" do
+      expect(build(:rating, movie: nil)).to be_invalid
+    end
+
+    it " should be invalid if doesn't exist" do
+      expect(build(:rating, movie_id: -1)).to be_invalid
+    end
+  end
 end
