@@ -4,4 +4,5 @@ class Rating < ApplicationRecord
 
   validates :comment, presence: :true
   validates :grade, inclusion: [true, false], exclusion: [nil]
+  validates :movie_id, uniqueness: { scope: :user_id }
 end
