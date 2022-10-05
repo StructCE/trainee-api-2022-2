@@ -11,4 +11,17 @@ RSpec.describe Rating, type: :model do
     end
   end
 
+  context "Validating grade" do
+    it " should be valid if true" do
+      expect(build(:rating, grade: true)).to be_valid
+    end
+
+    it " should be valid if false" do
+      expect(build(:rating, grade: false)).to be_valid
+    end
+
+    it " should be invalid if nil" do
+      expect(build(:rating, grade: nil)).to be_invalid
+    end
+  end
 end
