@@ -52,5 +52,14 @@ RSpec.describe Rating, type: :model do
       create(:rating, user: user, movie: movie)
       expect(build(:rating, user: user, movie: movie)).to be_invalid
     end
+
+    it " should be valid if user rated another movie" do
+      user = create(:user)
+      movie = create(:movie)
+      create(:rating, user: user, movie: movie)
+
+      movie2 = create(:movie)
+      expect(build(:rating, user: user, movie: movie2)).to be_valid
+    end
   end
 end
