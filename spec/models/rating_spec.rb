@@ -44,4 +44,13 @@ RSpec.describe Rating, type: :model do
       expect(build(:rating, movie_id: -1)).to be_invalid
     end
   end
+
+  context "Validating uniqueness in scope" do
+    it " should be invalid if user already rated movie" do
+      user = create(:user)
+      movie = create(:movie)
+      create(:rating, user: user, movie: movie)
+      expect(build(:rating, user: user, movie: movie)).to be_invalid
+    end
+  end
 end
