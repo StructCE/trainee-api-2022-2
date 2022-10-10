@@ -1,6 +1,9 @@
 class Api::V1::GenreController < ApplicationController
     def index
-        genre = Genre.all
+        page = params[:page] ? params[:page].to_i : 1
+        per_page = params[:per_page] ? params[:per_page].to_i : Genre.all.length
+        offset = page >= 1 ? (page - 1) * per_page : 0
+        genre = Genre.all.limit(per_page).offset(offset)
         render json: genre, status: :ok
     end
 
@@ -18,6 +21,24 @@ class Api::V1::GenreController < ApplicationController
     rescue StandardError => e
         render json: e, status: :bad_request
     end
+
+    def update
+        genre = Genre.find(params[:id])
+        genre.update!(genre_params)
+        render json: genre, status: :ok
+    rescue StandardError => e
+        render json: e, status: :bad_request
+    end
+
+    def delete
+        genre = Genre.find(params[:id])
+        genre.destroy!
+        render json: genre, status: :ok
+    rescue StandardError => e
+        render json: e, status: :bad_request
+    end
+
+
 
 
     private

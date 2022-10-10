@@ -58,7 +58,6 @@ RSpec.describe "Api::V1::Genres", type: :request do
     end
     context 'params are ok' do
       it 'return http status created' do
-        p genre_params
         post "/api/v1/genre/create", params: {genre: genre_params}
         expect(response).to have_http_status(:created)
       end
@@ -72,6 +71,45 @@ RSpec.describe "Api::V1::Genres", type: :request do
       it 'when params is not unique' do
         post "/api/v1/genre/create", params: {genre: genre_params}
         post "/api/v1/genre/create", params: {genre: genre_params}
+        expect(response).to have_http_status(:bad_request)
+      end
+    end
+  end
+
+  describe 'PATCH /update/:id' do
+    let(:genre1) {create(:genre, name: 'Genre1')}
+    let(:genre2) {create(:genre, name: 'Genre2')}
+    context 'params are ok' do
+      it 'return http status ok' do
+        patch "/api/v1/genre/update/#{genre1.id}", params: {genre: {name: "Aventura"}}
+        expect(response).to have_http_status(:ok)
+      end
+    end
+    context 'params are nil' do
+      it 'return http status bad_request' do
+        patch "/api/v1/genre/update/#{genre1.id}", params: {genre: {name: nil}}
+        expect(response).to have_http_status(:bad_request)
+      end
+    end
+    context 'params are not unique' do
+      it 'return http status bad_request' do
+        patch "/api/v1/genre/update/#{genre1.id}", params: {genre: {name: genre2.name}}
+        expect(response).to have_http_status(:bad_request)
+      end
+    end
+  end
+
+  describe 'DELETE /delete/:id' do
+    let(:genre) {create(:genre)}
+    context 'genre exists' do
+      it 'return http status ok' do
+        delete "/api/v1/genre/delete/#{genre.id}"
+        expect(response).to have_http_status(:ok)
+      end
+    end
+    context 'genre does not exist' do
+      it 'return http status bad request' do
+        delete "/api/v1/genre/delete/-1"
         expect(response).to have_http_status(:bad_request)
       end
     end
