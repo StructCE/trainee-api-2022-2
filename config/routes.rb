@@ -1,8 +1,14 @@
 Rails.application.routes.draw do
-  devise_for :admins
+  devise_for :admins, skip: :all
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   namespace 'api' do
     namespace 'v1' do
+
+      scope 'admins' do
+        get 'login', to: 'admins#login'
+        get 'logout', to: 'admins#logout'
+      end
+
       scope 'genre' do
         get 'index(/page/:page/per_page/:per_page)', to: 'genre#index'
         get 'index_paginated/page/:page/per_page/:per_page', to: 'genre#index_paginated'
