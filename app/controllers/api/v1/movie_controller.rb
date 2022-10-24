@@ -7,4 +7,10 @@ class Api::V1::MovieController < ApplicationController
         genre = Movie.all.limit(per_page).offset(offset)
         render json: genre, status: :ok
     end
+
+    private
+
+    def movie_params
+        params.require(:genre).permit(:name, movies: [])
+    end
 end

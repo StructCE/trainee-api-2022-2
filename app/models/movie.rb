@@ -4,4 +4,6 @@ class Movie < ApplicationRecord
 
   validates :name, :genre, presence: :true
   validates :name, uniqueness: :true
+
+  has_many_attached :images
 end

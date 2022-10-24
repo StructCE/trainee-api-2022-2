@@ -7,4 +7,10 @@ class Api::V1::UserController < ApplicationController
         genre = User.all.limit(per_page).offset(offset)
         render json: genre, status: :ok
     end
+
+    private
+
+    def user_params
+        params.require(:genre).permit(:name, :profile_picture)
+    end
 end
