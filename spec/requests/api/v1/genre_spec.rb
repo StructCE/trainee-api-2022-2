@@ -53,63 +53,93 @@ RSpec.describe "Api::V1::Genres", type: :request do
     end
   end
   describe 'POST /create' do
+    let(:admin) {create(:admin)}
     let(:genre_params) do
       attributes_for(:genre)
     end
     context 'params are ok' do
       it 'return http status created' do
-        post "/api/v1/genre/create", params: {genre: genre_params}
+        post "/api/v1/genre/create", params: {genre: genre_params}, headers: {
+          'X-Admin-Email': admin.email,
+          'X-Admin-Token': admin.authentication_token
+        }
         expect(response).to have_http_status(:created)
       end
     end
     context 'whit bad params' do
       it 'when param is nill' do
         genre_params = nil
-        post "/api/v1/genre/create", params: {genre: genre_params}
+        post "/api/v1/genre/create", params: {genre: genre_params}, headers: {
+          'X-Admin-Email': admin.email,
+          'X-Admin-Token': admin.authentication_token
+        }
         expect(response).to have_http_status(:bad_request)
       end
       it 'when params is not unique' do
-        post "/api/v1/genre/create", params: {genre: genre_params}
-        post "/api/v1/genre/create", params: {genre: genre_params}
+        post "/api/v1/genre/create", params: {genre: genre_params}, headers: {
+          'X-Admin-Email': admin.email,
+          'X-Admin-Token': admin.authentication_token
+        }
+        post "/api/v1/genre/create", params: {genre: genre_params}, headers: {
+          'X-Admin-Email': admin.email,
+          'X-Admin-Token': admin.authentication_token
+        }
         expect(response).to have_http_status(:bad_request)
       end
     end
   end
 
   describe 'PATCH /update/:id' do
+    let(:admin) {create(:admin)}
     let(:genre1) {create(:genre, name: 'Genre1')}
     let(:genre2) {create(:genre, name: 'Genre2')}
     context 'params are ok' do
       it 'return http status ok' do
-        patch "/api/v1/genre/update/#{genre1.id}", params: {genre: {name: "Aventura"}}
+        patch "/api/v1/genre/update/#{genre1.id}", params: {genre: {name: "Aventura"}}, headers: {
+          'X-Admin-Email': admin.email,
+          'X-Admin-Token': admin.authentication_token
+        }
         expect(response).to have_http_status(:ok)
       end
     end
     context 'params are nil' do
       it 'return http status bad_request' do
-        patch "/api/v1/genre/update/#{genre1.id}", params: {genre: {name: nil}}
+        patch "/api/v1/genre/update/#{genre1.id}", params: {genre: {name: nil}}, headers: {
+          'X-Admin-Email': admin.email,
+          'X-Admin-Token': admin.authentication_token
+        }
         expect(response).to have_http_status(:bad_request)
       end
     end
     context 'params are not unique' do
       it 'return http status bad_request' do
-        patch "/api/v1/genre/update/#{genre1.id}", params: {genre: {name: genre2.name}}
+        patch "/api/v1/genre/update/#{genre1.id}", params: {genre: {name: genre2.name}}, headers: {
+          'X-Admin-Email': admin.email,
+          'X-Admin-Token': admin.authentication_token
+        }
         expect(response).to have_http_status(:bad_request)
       end
     end
   end
 
   describe 'DELETE /delete/:id' do
+    let(:admin) {create(:admin)}
     let(:genre) {create(:genre)}
     context 'genre exists' do
       it 'return http status ok' do
-        delete "/api/v1/genre/delete/#{genre.id}"
+        delete "/api/v1/genre/delete/#{genre.id}" , headers: {
+          'X-Admin-Email': admin.email,
+          'X-Admin-Token': admin.authentication_token
+        }
         expect(response).to have_http_status(:ok)
       end
     end
     context 'genre does not exist' do
       it 'return http status bad request' do
-        delete "/api/v1/genre/delete/-1"
+        delete "/api/v1/genre/delete/-1", headers: {
+          'X-Admin-Email': admin.email,
+          'X-Admin-Token': admin.authentication_token
+        }
         expect(response).to have_http_status(:bad_request)
       end
     end
