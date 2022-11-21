@@ -17,6 +17,12 @@ Rails.application.routes.draw do
         patch 'update/:id', to: 'genre#update' 
         delete 'delete/:id', to: 'genre#delete'
       end
+      scope 'user' do
+        get 'index(/page/:page/per_page/:per_page)', to: 'user#index'
+      end
+      scope 'movie' do
+        get 'index(/page/:page/per_page/:per_page)', to: 'movie#index'
+      end
     end
   end
 end
