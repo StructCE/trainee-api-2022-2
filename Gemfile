@@ -45,3 +45,8 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'figaro'
 
 gem 'active_model_serializers'
+
+gem 'devise'
+
+gem 'simple_token_authentication'
+

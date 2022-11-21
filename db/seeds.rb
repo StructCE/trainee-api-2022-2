@@ -21,3 +21,5 @@ Movie.first.images.attach(io: File.open('./public/prof.jpeg'), filename:'prof.jp
 Movie.first.images.attach(io: File.open('./public/mat.webp'), filename:'mat.webp')
 
 
+
+Admin.create!(email:"trainee@struct", password:"123456")
