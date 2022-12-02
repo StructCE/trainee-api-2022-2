@@ -1,6 +1,6 @@
 class Api::V1::GenreController < ApplicationController
 
-    acts_as_token_authentication_handler_for Admin, only:[:create, :update, :delete]
+    # acts_as_token_authentication_handler_for Admin, only:[:create, :update, :delete]
     def index
         page = params[:page] ? params[:page].to_i : 1
         per_page = params[:per_page] ? params[:per_page].to_i : Genre.all.length

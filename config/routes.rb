@@ -19,6 +19,9 @@ Rails.application.routes.draw do
       end
       scope 'user' do
         get 'index(/page/:page/per_page/:per_page)', to: 'user#index'
+        post 'create', to: 'user#create'
+        delete 'delete/:id', to: 'user#delete'
+        post 'add_profile_picture/:id', to: 'user#add_profile_picture'
       end
       scope 'movie' do
         get 'index(/page/:page/per_page/:per_page)', to: 'movie#index'
