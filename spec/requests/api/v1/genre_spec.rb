@@ -53,7 +53,7 @@ RSpec.describe "Api::V1::Genres", type: :request do
     end
   end
   describe 'POST /create' do
-    let(:admin) {create(:admin)}
+    let(:admin) {create(:user, :admin)}
     let(:genre_params) do
       attributes_for(:genre)
     end
@@ -90,7 +90,7 @@ RSpec.describe "Api::V1::Genres", type: :request do
   end
 
   describe 'PATCH /update/:id' do
-    let(:admin) {create(:admin)}
+    let(:admin) {create(:user, :admin)}
     let(:genre1) {create(:genre, name: 'Genre1')}
     let(:genre2) {create(:genre, name: 'Genre2')}
     context 'params are ok' do
@@ -123,7 +123,7 @@ RSpec.describe "Api::V1::Genres", type: :request do
   end
 
   describe 'DELETE /delete/:id' do
-    let(:admin) {create(:admin)}
+    let(:admin) {create(:user, :admin)}
     let(:genre) {create(:genre)}
     context 'genre exists' do
       it 'return http status ok' do

@@ -5,9 +5,9 @@ Rails.application.routes.draw do
   namespace 'api' do
     namespace 'v1' do
 
-      scope 'admins' do
-        get 'login', to: 'admins#login'
-        get 'logout', to: 'admins#logout'
+      scope 'sessions' do
+        get 'login', to: 'sessions#login'
+        get 'logout', to: 'sessions#logout'
       end
 
       scope 'genre' do
