@@ -16,6 +16,13 @@ class Api::V1::UserController < ApplicationController
         render json: e, status: :bad_request
     end
 
+    def show
+        render json: User.find(params[:id]), status: :ok
+    rescue ActiveRecord::RecordNotFound => e
+        render json: { error: e.message }, status: :not_found
+    end
+    
+
     def delete
         user = User.find(params[:id])
         user.destroy!
@@ -40,6 +47,6 @@ class Api::V1::UserController < ApplicationController
     private
 
     def user_params
-        params.require(:user).permit(:name, :is_admin, :profile_picture)
+        params.require(:user).permit(:name, :is_admin, :profile_picture, :email, :password)
     end
 end

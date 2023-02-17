@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     namespace 'v1' do
 
       scope 'sessions' do
-        get 'login', to: 'sessions#login'
+        post 'login', to: 'sessions#login'
         get 'logout', to: 'sessions#logout'
       end
 
@@ -19,6 +19,7 @@ Rails.application.routes.draw do
         delete 'delete/:id', to: 'genre#delete'
       end
       scope 'user' do
+        get 'show/:id', to: 'user#show'
         get 'index(/page/:page/per_page/:per_page)', to: 'user#index'
         post 'create', to: 'user#create'
         delete 'delete/:id', to: 'user#delete'

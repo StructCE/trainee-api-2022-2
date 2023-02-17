@@ -4,8 +4,9 @@ class Api::V1::SessionsController < ApplicationController
         user = User.find_by!(email: login_params[:email])
         raise StandardError if !user.valid_password?(login_params[:password])
         
-        render json: user, status: :ok
+        render json: user, serializer: SessionSerializer, status: :ok
     rescue StandardError => e
+        p e
         render json: { message: 'Wrong email or password' }, status: :unauthorized
     end
 
